@@ -40,7 +40,7 @@ while read -r line; do
 done <<< "${ISSUES}"
 
 # Start DBs cloning
-#${scriptDir}/cloneDb.sh "${DBs}"
+${scriptDir}/cloneDb.sh "${DBs}"
 
 [ $? -eq 0 ] || (${scriptDir}/send2bot.sh "$(basename $0): DB cloning is unsuccessful"; exit 1)
 
