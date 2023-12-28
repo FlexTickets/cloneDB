@@ -5,11 +5,11 @@ set -euo pipefail
 # Redirect stdout and stderr to syslog
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
-source .jira.token
 USER=f.kolodiazhnyi@enamine.net
 CURL_KEYS="-ks"
 JIRA_URL=https://enamine.atlassian.net
 scriptDir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+source ${scriptDir}/.jira.token
 
 function my_trap() {
         local lineno=$1
