@@ -12,8 +12,8 @@ DB_PORT=30000
 DB_NAME=market
 USER_NAME=estore
 DATE=$(date +%Y%m%d_%H%M)
-DUMP=/home/kofe/dumps/${DB_NAME}_${DATE}.sql
 scriptDir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+DUMP=${scriptDir}/../dumps/${DB_NAME}_${DATE}.sql
 source ${scriptDir}/.db.passwd
 FLAG=0
 
