@@ -7,7 +7,7 @@ if [ $# -lt 1 ]; then
         exit 0
 fi
 
-DB_SERVER=shop-test.k8s.enamine.net
+DB_SERVER=node11-mtx.ad.loc
 DB_PORT=30000
 DB_NAME=market
 USER_NAME=estore
