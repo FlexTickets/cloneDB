@@ -24,14 +24,14 @@ function my_trap() {
         local lineno=$1
         local cmd=$2
 	rm ${DUMP}
-	msg=$(echo "$(basename $0): Failed at line ${lineno}: ${cmd}" | sed 's/\"/\\\"/g')
+	msg=$(echo "<b>$(basename $0)</b> \nFailed at line ${lineno}: ${cmd}" | sed "s/\"/'/g")
         ${scriptDir}/send2bot.sh "${msg}"
         exit 1
 }
 
 trap 'my_trap ${LINENO} "${BASH_COMMAND}"' ERR
 
-${scriptDir}/send2bot.sh "$(basename $0) \"$1\""
+${scriptDir}/send2bot.sh "<b>$(basename $0)</b> \n$1"
 
 # Parse arg into array of databases name
 [[ -z "$(echo $1 | grep ',')" ]] && arg1="$(echo "$1" | tr -s ' ' | sed 's/ /|/g')" || arg1="$(echo "$1" | tr -d ' ' | sed 's/,/|/g')"
@@ -56,15 +56,15 @@ for db in ${databases[@]}; do
 
 	DB_NAME=${db}
 	# Drop DB
-	[[ -z "$(eval ${DROP_DB})" ]] || (FLAG=1; echo "Drop DB error"; ${scriptDir}/send2bot.sh "$(basename $0) \"Drop DB error\""; continue)
+	[[ -z "$(eval ${DROP_DB})" ]] || (FLAG=1; echo "Drop DB error"; ${scriptDir}/send2bot.sh "<b>$(basename $0)</b> \nDrop DB error"; continue)
 
 	# Create new db and grant privileges
-	[[ -z "$(eval ${CREATE_DB})" ]] || (FLAG=1; echo "Creating DB error"; ${scriptDir}/send2bot.sh "$(basename $0) \"Creating DB error\""; continue)
-	[[ -z "$(eval ${GRANT_PRIVS})" ]] || (FLAG=1; echo "Granting privileges error"; ${scriptDir}/send2bot.sh "$(basename $0) \"Granting privileges error\""; continue)
+	[[ -z "$(eval ${CREATE_DB})" ]] || (FLAG=1; echo "Creating DB error"; ${scriptDir}/send2bot.sh "<b>$(basename $0)</b> \nCreating DB error"; continue)
+	[[ -z "$(eval ${GRANT_PRIVS})" ]] || (FLAG=1; echo "Granting privileges error"; ${scriptDir}/send2bot.sh "<b>$(basename $0)</b> \nGranting privileges error"; continue)
 
 	# Import dump to new db
-	[[ -z "$(eval ${IMPORT})" ]] || (FLAG=1; echo "Importing DB error"; ${scriptDir}/send2bot.sh "$(basename $0) \"Importing DB error\"")
+	[[ -z "$(eval ${IMPORT})" ]] || (FLAG=1; echo "Importing DB error"; ${scriptDir}/send2bot.sh "<b>$(basename $0)</b> \nImporting DB error")
 done
 rm ${DUMP}
-#${scriptDir}/send2bot.sh "$(basename $0): exit"
+#${scriptDir}/send2bot.sh "<b>$(basename $0)</b> \nexit"
 exit ${FLAG}
