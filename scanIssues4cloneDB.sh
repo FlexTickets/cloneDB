@@ -4,7 +4,7 @@ set -euo pipefail
 
 # Get list of transitions for given issue
 #
-# curl -ks -u f.kolodiazhnyi@enamine.net:VHpfz4Aj1U36mSsLzyN91B6B https://enamine.atlassian.net/rest/api/2/issue/SHOP-XXXXX/transitions | jq .[]
+# curl -ks -u f.kolodiazhnyi@enamine.net:<Attlassian tocken> https://enamine.atlassian.net/rest/api/2/issue/SHOP-XXXXX/transitions | jq .[]
 
 # Redirect stdout and stderr to syslog
 exec 1> >(logger -s -t $(basename $0)) 2>&1
